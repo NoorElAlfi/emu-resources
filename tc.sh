@@ -1,17 +1,11 @@
 #!/bin/bash
 sudo apt-get update
-sudo apt-get install openjdk-8-jdk
-sudo groupadd tomcat
-sudo useradd -s /bin/false -g tomcat -d /usr/local/tomcat tomcat
-sudo mkdir /opt/tomcat
-sudo tar xzvf /home/noor/apache-tomcat-8.0.1.tar.gz -C /opt/tomcat --strip-components=1
-sudo chgrp -R tomcat /opt/tomcat
-sudo chmod -R g+r /opt/tomcat/conf
-sudo chmod g+x /opt/tomcat/conf
-sudo chown -R tomcat /opt/tomcat/work/ /opt/tomcat/logs/ /opt/tomcat/webapps/ /opt/tomcat/temp/
-cp /home/noor/tomcat.service /etc/systemd/system/
-sudo ufw allow 8080
-sudo systemctl daemon-reload
-sudo systemctl start tomcat
-sudo systemctl status tomcat
+sudo apt-get install tomcat8 tomcat8-admin
+sudo head -n -1 /etc/tomcat8/tomcat-users.xml > /etc/tomcat8/temp.xml
+printf '<role rolename=\"manager-gui\"/>\n' >> /etc/tomcat8/temp.xml
+printf '<user username=\"tomcat\" password=\"tomcat\" roles=\"manager-gui\"/>\n' >> /etc/tomcat8/temp.xml
+printf '</tomcat-users>\n' >> /etc/tomcat8/temp.xml
+sudo rm -f /etc/tomcat8/tomcat-users.xml
+sudo mv /etc/tomcat8/temp.xml /etc/tomcat8/tomcat-users.xml
+sudo service tomcat8 restart
 exit
