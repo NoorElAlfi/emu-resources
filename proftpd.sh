@@ -7,8 +7,6 @@ cd proftpd-1.3.5;
 ./configure --with-modules=mod_copy;
 make;
 sudo make install;
+sudo sh /home/noor/emu-resources/apache.sh
 sudo ./proftpd -n -c "/home/noor/proftpd-1.3.5/sample-configurations/basic.conf";
-sudo apt install -y php apache2; 
-sudo mkdir /home/var/www/html/test;
-sudo chmod 777 /var/www/html/test;
 exit;
